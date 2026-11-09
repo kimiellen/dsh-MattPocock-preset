@@ -1,3 +1,7 @@
+> **This is a downstream distribution of [mattpocock/skills](https://github.com/mattpocock/skills) for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).**
+> It adds a dsh bundle that loads the promoted skills (`engineering` and `productivity`) as preset-scoped skills, active only under the **MattPocock** preset.
+> **Install and docs: [dsh/README.md](./dsh/README.md)**. Everything below is the upstream README, kept in sync with upstream.
+
 <p>
   <a href="https://www.aihero.dev/s/skills-newsletter">
     <picture>
@@ -257,6 +261,3 @@ General workflow tools, not code-specific.
 - **[grilling](./skills/productivity/grilling/SKILL.md)**: Interview the user relentlessly about a plan, decision, or idea until every branch of the design tree is resolved. The reusable interview primitive behind `grill-me`, `grill-with-docs`, `triage`, `wayfinder` and `improve-codebase-architecture`.
 - **[writing-for-agents](./skills/productivity/writing-for-agents/SKILL.md)**: Writing documents for agents: skills, AGENTS.md/CLAUDE.md, and any doc an agent reaches by a pointer.
 
-## DeepSeek Harness preset
-
-This fork also ships a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) bundle that loads the promoted skills (`engineering` and `productivity`) as preset-scoped skills, active only under the **MattPocock** preset. See [dsh/README.md](./dsh/README.md) for install, upgrade, and sync instructions.
