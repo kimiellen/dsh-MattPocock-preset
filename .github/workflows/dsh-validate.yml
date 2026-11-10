@@ -3,11 +3,11 @@ name: dsh-validate
 on:
   push:
     paths:
-      - 'skills/**'
+      - 'upstreams/**'
       - 'dsh/**'
   pull_request:
     paths:
-      - 'skills/**'
+      - 'upstreams/**'
       - 'dsh/**'
 
 jobs:

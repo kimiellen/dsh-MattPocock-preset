@@ -1,18 +1,21 @@
 #!/usr/bin/env node
-// Validates that the promoted skill buckets (skills/engineering,
-// skills/productivity) are loadable by @deepseek-ai/dsh-skill-filesystem.
+// Validates that every skill directory contributed by the vendored
+// upstreams (see dsh/upstreams.mjs) is loadable by
+// @deepseek-ai/dsh-skill-filesystem.
 //
 // dsh discovers skills one level deep: <root>/<name>/SKILL.md or a flat
 // <root>/<name>.md. Entries with invalid frontmatter are skipped with a
 // warning and never reach the model catalog, so this script fails loudly on
-// anything dsh would silently drop.
+// anything dsh would silently drop. It also fails on duplicate skill names
+// across ALL roots, because dsh resolves cross-root collisions silently.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import upstreams from '../upstreams.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const roots = ['skills/engineering', 'skills/productivity'];
+const roots = upstreams.flatMap((u) => u.skillDirs.map((dir) => `${u.prefix}/${dir}`));
 
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const BOOL_WORDS = /^(true|false|yes|no|on|off|1|0)$/i;
