@@ -2,10 +2,10 @@
 # (/usr/lib/node_modules/@deepseek-ai/dsh). Regenerate with: npm run dsh:install -- --generate-only
 # Do not edit by hand; manual edits are overwritten on the next run.
 - insert:
-    - id: preset-mattpocock
+    - id: preset-coding
       name: "@deepseek-ai/dsh-agent-preset"
       config:
-        id: mattpocock
+        id: coding
         order: 20
         plugins:
           - id: persona
@@ -38,8 +38,8 @@
             name: "@deepseek-ai/dsh-skill-filesystem"
             config:
               customSkillDirs:
-                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-mattpocock-preset/package.json')),'skills', 'engineering')})(baseUrl)
-                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-mattpocock-preset/package.json')),'skills', 'productivity')})(baseUrl)
+                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-coding-preset/package.json')),'upstreams', 'mattpocock', 'skills', 'engineering')})(baseUrl)
+                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-coding-preset/package.json')),'upstreams', 'mattpocock', 'skills', 'productivity')})(baseUrl)
           - id: tool-skill
             name: "@deepseek-ai/dsh-tool-skill"
           - id: command-goal
@@ -130,5 +130,5 @@
           - id: tool-plugin-market
             name: "@deepseek-ai/dsh-plugin-market/tools"
             disabled: true
-        name: MattPocock
-        description: The standard preset plus Matt Pocock's engineering and productivity skills, scoped to this preset.
+        name: Coding
+        description: The standard preset plus the coding skill set vendored under upstreams/ in this repository, scoped to this preset.
