@@ -15,8 +15,10 @@ through the preset-local `customSkillDirs` option of
   copy of the shipped **standard** preset, with one change: the
   `skill-filesystem` row gets two extra skill roots pointing at
   `skills/engineering` and `skills/productivity` in this repository.
-- The paths are resolved at mount time relative to the patch file, so the
-  preset works no matter where the repository is installed.
+- The paths are resolved at mount time by locating this package through Node
+  resolution from the profile directory (the loader `baseUrl`), so the preset
+  works no matter where the repository is installed. Bundle patches are merged
+  into the profile's root include, so `baseUrl` is never the patch file itself.
 - `scripts/install.mjs` **regenerates** `cordis.patch.yml` from the
   `standard.patch.yml` of the dsh version installed on your machine, so the
   preset never drifts from your dsh version. If your dsh installation is not

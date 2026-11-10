@@ -38,8 +38,8 @@
             name: "@deepseek-ai/dsh-skill-filesystem"
             config:
               customSkillDirs:
-                - !!js (function(u){var p=process.getBuiltinModule('node:path');var f=u.startsWith('file:')?process.getBuiltinModule('node:url').fileURLToPath(u):u;return p.join(p.dirname(f),'..','skills', 'engineering')})(baseUrl)
-                - !!js (function(u){var p=process.getBuiltinModule('node:path');var f=u.startsWith('file:')?process.getBuiltinModule('node:url').fileURLToPath(u):u;return p.join(p.dirname(f),'..','skills', 'productivity')})(baseUrl)
+                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-mattpocock-preset/package.json')),'skills', 'engineering')})(baseUrl)
+                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-mattpocock-preset/package.json')),'skills', 'productivity')})(baseUrl)
           - id: tool-skill
             name: "@deepseek-ai/dsh-tool-skill"
           - id: command-goal

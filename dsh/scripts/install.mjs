@@ -42,12 +42,19 @@ const jsTag = {
   stringify: (item) => item.value.code,
 };
 
-// A skill root expression resolved against the patch file location at mount
-// time, so the preset works regardless of where the bundle was installed.
+// A skill root expression resolved at mount time. Bundle patches are merged
+// into the profile's root include, so `baseUrl` is the profile directory, NOT
+// this patch file: an expression anchored at the patch file location resolves
+// one level above ~/.dsh and silently yields an empty skill catalog. Instead,
+// locate this package through Node resolution from baseUrl, mirroring the
+// official cordis preset; link installs resolve to the real clone path, so the
+// preset works regardless of where the repository is installed.
+const packageName = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8')).name;
+
 function skillDirExpr(...segments) {
   const parts = segments.map((s) => `'${s}'`).join(', ');
   return new JsExpr(
-    `(function(u){var p=process.getBuiltinModule('node:path');var f=u.startsWith('file:')?process.getBuiltinModule('node:url').fileURLToPath(u):u;return p.join(p.dirname(f),'..',${parts})})(baseUrl)`,
+    `(function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('${packageName}/package.json')),${parts})})(baseUrl)`,
   );
 }
 
