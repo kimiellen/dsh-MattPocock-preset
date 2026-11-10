@@ -82,7 +82,12 @@ for (const root of roots) {
     if (entry.isDirectory()) {
       const skillFile = path.join(p, 'SKILL.md');
       if (!fs.existsSync(skillFile)) {
-        warn(`${root}/${entry.name}: no SKILL.md; dsh ignores this directory.`);
+        // Hidden directories (`.github`, `.agents`, ...) are ordinary repo
+        // plumbing, not skill candidates, so they stay silent; anything
+        // visible in a skill root is still worth a warning.
+        if (!entry.name.startsWith('.')) {
+          warn(`${root}/${entry.name}: no SKILL.md; dsh ignores this directory.`);
+        }
         continue;
       }
       checkSkillFile(skillFile, `${root}/${entry.name}`);
@@ -94,11 +99,13 @@ for (const root of roots) {
         }
       }
     } else if (entry.name.endsWith('.md')) {
-      // Flat files are skills too. A bucket README.md without frontmatter is
-      // skipped by dsh with a warning, so only flag it here as a warning.
+      // Flat files are skills too, but a root that is a vendored repository
+      // root (see the archify upstream) also holds ordinary documentation.
+      // dsh skips a flat file without frontmatter with a warning, so mirror
+      // that here; files that do carry frontmatter are checked strictly.
       const fields = parseFrontmatter(p);
-      if (entry.name === 'README.md' && !fields) {
-        warn(`${root}/README.md: no frontmatter; dsh reports a skipped entry. Harmless but noisy.`);
+      if (!fields) {
+        warn(`${root}/${entry.name}: no frontmatter; dsh skips this file.`);
         continue;
       }
       checkSkillFile(p, `${root}/${entry.name}`);

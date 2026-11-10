@@ -5,7 +5,7 @@
   "description": "A curated set of coding skill repositories, installed into DeepSeek Harness as a single preset",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kimiellen/dsh-MattPocock-preset"
+    "url": "https://github.com/kimiellen/dsh-coding-preset"
   },
   "license": "MIT",
   "dsh": {

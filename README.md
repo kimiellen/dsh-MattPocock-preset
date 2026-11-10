@@ -19,8 +19,10 @@ preset. Other presets and sessions are unaffected.
 │   ├── UPSTREAMS           # record of the last synced upstream SHAs
 │   └── scripts/            # install.mjs, validate.mjs, sync.mjs
 └── upstreams/
-    └── mattpocock/         # git subtree of https://github.com/mattpocock/skills
-        └── skills/         # engineering/ and productivity/ are contributed
+    ├── mattpocock/         # git subtree of https://github.com/mattpocock/skills
+    │   └── skills/         # engineering/ and productivity/ are contributed
+    └── archify/            # git subtree of https://github.com/tt-a1i/archify
+        └── archify/        # the main skill; the vendored repo root is its skill root
 ```
 
 Every upstream under `upstreams/` is a full vendored copy of its repository,
@@ -110,6 +112,9 @@ dsh plugin --profile web remove dsh-coding-preset
 - Each upstream may promote only part of its skill set: mattpocock
   contributes `skills/engineering` and `skills/productivity`, matching its
   own promotion policy (`misc`, `in-progress`, and `deprecated` stay out).
+  archify contributes its main skill through a scan of the vendored
+  repository root; the four skills under `.agents/skills` are marked
+  internal upstream and stay out.
 
 ## License
 

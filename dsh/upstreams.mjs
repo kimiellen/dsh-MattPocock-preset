@@ -22,4 +22,16 @@ export default [
     prefix: 'upstreams/mattpocock',
     skillDirs: ['skills/engineering', 'skills/productivity'],
   },
+  {
+    name: 'archify',
+    repo: 'https://github.com/tt-a1i/archify',
+    ref: 'main',
+    prefix: 'upstreams/archify',
+    // The main skill lives at <repo>/archify/SKILL.md, so the skill root is
+    // the repository root itself: the scan discovers exactly the archify
+    // skill, and dsh skips the root's documentation files and non-skill
+    // directories. The four skills under .agents/skills are marked internal
+    // upstream (archify self-maintenance tooling) and are not contributed.
+    skillDirs: ['.'],
+  },
 ];
