@@ -36,7 +36,11 @@ for (const u of upstreams) {
     ['subtree', op, `--prefix=${u.prefix}`, u.repo, u.ref, '--squash', '-m', message],
     { cwd: repoRoot, stdio: 'inherit' },
   );
-  const sha = gitOut('ls-remote', u.repo, u.ref).split(/\s+/)[0];
+  // Record the exact commit the subtree operation fetched. ls-remote with a
+  // bare ref name would match ANY ref whose last component equals it (for
+  // example changeset-release/main next to main) and could record a branch
+  // that was never vendored; FETCH_HEAD is what the pull just fetched.
+  const sha = gitOut('rev-parse', 'FETCH_HEAD');
   records.push({ ...u, sha });
 }
 
