@@ -40,6 +40,7 @@
               customSkillDirs:
                 - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-coding-preset/package.json')),'upstreams', 'mattpocock', 'skills', 'engineering')})(baseUrl)
                 - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-coding-preset/package.json')),'upstreams', 'mattpocock', 'skills', 'productivity')})(baseUrl)
+                - !!js (function(u){var p=process.getBuiltinModule('node:path');var m=process.getBuiltinModule('node:module');return p.join(p.dirname(m.createRequire(u).resolve('dsh-coding-preset/package.json')),'upstreams', 'archify', '.')})(baseUrl)
           - id: tool-skill
             name: "@deepseek-ai/dsh-tool-skill"
           - id: command-goal
