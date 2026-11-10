@@ -46,27 +46,34 @@ function parseFrontmatter(file) {
   return fields;
 }
 
-function checkSkillFile(file, source) {
+function checkSkillFile(file, source, flat = false) {
   const fields = parseFrontmatter(file);
   const rel = path.relative(repoRoot, file);
   if (!fields) {
     fail(`${rel}: missing YAML frontmatter; dsh will skip this entry.`);
     return;
   }
+  // Flat files share their root with ordinary documentation (a vendored
+  // repository root, see the archify upstream), so a malformed flat entry
+  // is a warning: dsh skips it and nothing reaches the catalog. Directory
+  // skills (SKILL.md) state intent unambiguously and stay strict. Only the
+  // duplicate check stays an error for flat files, because a flat file
+  // with a valid name IS a loadable skill that would silently win or lose.
+  const complain = flat ? warn : fail;
   const { name, description } = fields;
   if (!name) {
-    fail(`${rel}: frontmatter "name" is required.`);
+    complain(`${rel}: frontmatter "name" is required.`);
   } else if (!KEBAB.test(name)) {
-    fail(`${rel}: name "${name}" is not kebab-case; dsh will skip this skill.`);
+    complain(`${rel}: name "${name}" is not kebab-case; dsh will skip this skill.`);
   } else if (seen.has(name)) {
     fail(`${rel}: duplicate skill name "${name}" (also in ${seen.get(name)}).`);
   } else {
     seen.set(name, source);
   }
-  if (!description) fail(`${rel}: frontmatter "description" is required.`);
+  if (!description) complain(`${rel}: frontmatter "description" is required.`);
   for (const key of INVOCATION_KEYS) {
     if (key in fields && !BOOL_WORDS.test(fields[key])) {
-      fail(`${rel}: ${key} value "${fields[key]}" is not a strict boolean spelling; dsh will drop the skill.`);
+      complain(`${rel}: ${key} value "${fields[key]}" is not a strict boolean spelling; dsh will drop the skill.`);
     }
   }
 }
@@ -108,7 +115,7 @@ for (const root of roots) {
         warn(`${root}/${entry.name}: no frontmatter; dsh skips this file.`);
         continue;
       }
-      checkSkillFile(p, `${root}/${entry.name}`);
+      checkSkillFile(p, `${root}/${entry.name}`, true);
     }
   }
 }
